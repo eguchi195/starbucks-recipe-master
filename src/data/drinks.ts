@@ -122,9 +122,10 @@ export const DRINKS: Drink[] = [
     name: 'アールグレイブーケ & ティーラテ',
     code: 'BL',
     category: 'tea',
-    temps: ['hot'],
+    temps: ['hot', 'ice'],
     availableSizes: ['S', 'T', 'G', 'V'],
-    baseNote: '基本GTLと同じ（シロップはクラシックシロップ、パウダーはブーケ）。',
+    baseNote:
+      '基本GTLと同じ（シロップはクラシックシロップ、パウダーはブーケ）。アイスは2〜6がGTL(アイス)と同じ、パウダーのみアールグレイパウダーに変更。',
     steps: [
       { no: 1, temp: 'hot', title: 'ミルクスチーム', detail: 'EHボタン' },
       {
@@ -141,6 +142,15 @@ export const DRINKS: Drink[] = [
         temp: 'hot',
         title: '仕上げ',
         detail: 'お湯 → 混ぜる → ミルク(12mm下) → ホイップ(2周) → ハチミツ(1周) → ベルガモットシトラスパウダー(底を叩く)',
+      },
+      { no: 2, temp: 'ice', title: 'ミルク', detail: 'カップ半分まで' },
+      { no: 4, temp: 'ice', title: 'アールグレイパウダー', items: [{ label: 'アールグレイパウダー', values: v('2', '3', '4', '5') }] },
+      { no: 6, temp: 'ice', title: 'ブレンド', detail: 'S:#2, 他:#1' },
+      {
+        no: 7,
+        temp: 'ice',
+        title: '仕上げ',
+        detail: '注ぐ → 氷(6mm下) → ホイップ → ハチミツ(1周) → ベルガモットパウダー',
       },
     ],
   },
