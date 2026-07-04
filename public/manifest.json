@@ -1,0 +1,20 @@
+{
+  "name": "スタバレシピマスター",
+  "short_name": "レシピ暗記",
+  "description": "スターバックス新人パートナー向け レシピ最速暗記アプリ",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F2F0EB",
+  "theme_color": "#00704A",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
