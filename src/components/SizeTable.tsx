@@ -5,7 +5,8 @@ import ScratchCell from './ScratchCell';
 interface Props {
   items: ValueItem[];
   availableSizes: Size[];
-  keyFor: (label: string, size: Size) => string;
+  /** 行単位の付箋キー（1タップでS/T/G/Vが一気にめくれる） */
+  keyFor: (label: string) => string;
   revealed: Set<string>;
   onToggle: (key: string) => void;
 }
@@ -29,40 +30,44 @@ export default function SizeTable({ items, availableSizes, keyFor, revealed, onT
         ))}
       </div>
 
-      {items.map((item) => (
-        <div
-          key={item.label}
-          className="grid grid-cols-[minmax(0,1.4fr)_repeat(4,minmax(44px,1fr))] items-center border-b border-stone-100 last:border-b-0"
-        >
-          <div className="px-2 py-1 text-xs leading-tight text-stone-700">
-            {item.label}
-            {item.isCustom && (
-              <span className="ml-1 inline-block rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-700">
-                ※カスタム
-              </span>
-            )}
-          </div>
-          {SIZES.map((size) => {
-            const value = availableSizes.includes(size) ? item.values[size] : undefined;
-            if (value == null) {
+      {items.map((item) => {
+        const key = keyFor(item.label);
+        const isRevealed = revealed.has(key);
+        return (
+          <div
+            key={item.label}
+            className="grid grid-cols-[minmax(0,1.4fr)_repeat(4,minmax(44px,1fr))] items-center border-b border-stone-100 last:border-b-0"
+          >
+            <div className="px-2 py-1 text-xs leading-tight text-stone-700">
+              {item.label}
+              {item.isCustom && (
+                <span className="ml-1 inline-block rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-700">
+                  ※カスタム
+                </span>
+              )}
+            </div>
+            {SIZES.map((size, index) => {
+              const value = availableSizes.includes(size) ? item.values[size] : undefined;
+              if (value == null) {
+                return (
+                  <div key={size} className="flex min-h-[44px] items-center justify-center text-sm text-stone-300">
+                    -
+                  </div>
+                );
+              }
               return (
-                <div key={size} className="flex min-h-[44px] items-center justify-center text-sm text-stone-300">
-                  -
-                </div>
+                <ScratchCell
+                  key={size}
+                  value={value}
+                  revealed={isRevealed}
+                  delay={index * 0.06}
+                  onToggle={() => onToggle(key)}
+                />
               );
-            }
-            const cellKey = keyFor(item.label, size);
-            return (
-              <ScratchCell
-                key={size}
-                value={value}
-                revealed={revealed.has(cellKey)}
-                onToggle={() => onToggle(cellKey)}
-              />
-            );
-          })}
-        </div>
-      ))}
+            })}
+          </div>
+        );
+      })}
     </div>
   );
 }

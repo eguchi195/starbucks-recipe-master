@@ -19,7 +19,10 @@ export default function QuizPage() {
   const rate = score.total > 0 ? Math.round((score.correct / score.total) * 100) : null;
 
   return (
-    <div className="mx-auto max-w-md px-4 pb-24 pt-4">
+    <div
+      className="mx-auto max-w-md px-4 pb-24"
+      style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 20px)' }}
+    >
       <header className="mb-4 flex items-center gap-2">
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sbux text-white">
           <Brain size={20} />

@@ -2,7 +2,7 @@ import { ChevronLeft, CupSoda, Eye, EyeOff, Heart, Info } from 'lucide-react';
 import { useState } from 'react';
 import BannerImage from '../components/BannerImage';
 import EmptyState from '../components/EmptyState';
-import StepList, { allCellKeys } from '../components/StepList';
+import StepList, { allRowKeys } from '../components/StepList';
 import TempToggle from '../components/TempToggle';
 import { findDrink } from '../data/drinks';
 import type { Temp } from '../data/types';
@@ -52,7 +52,7 @@ export default function DrinkDetailPage({
   };
 
   const openAll = () => {
-    const all = new Set([...revealed, ...allCellKeys(drink, temp)]);
+    const all = new Set([...revealed, ...allRowKeys(drink, temp)]);
     onRevealedChange(drink.id, [...all]);
   };
 
@@ -60,8 +60,11 @@ export default function DrinkDetailPage({
 
   return (
     <div className="mx-auto max-w-md pb-24">
-      {/* ヘッダー */}
-      <div className="sticky top-0 z-10 flex items-center justify-between bg-stone-100/90 px-2 py-1 backdrop-blur">
+      {/* ヘッダー（ノッチ・ステータスバーを避けるセーフエリア対応） */}
+      <div
+        className="sticky top-0 z-10 flex items-center justify-between bg-stone-100/90 px-2 pb-1 backdrop-blur"
+        style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 12px)' }}
+      >
         <BackButton onBack={onBack} />
         <button
           type="button"

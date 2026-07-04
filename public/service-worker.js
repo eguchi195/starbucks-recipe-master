@@ -1,6 +1,6 @@
 /* スタバレシピマスター Service Worker（オフライン対応） */
 // 更新を配信するときは CACHE_NAME のバージョンを上げること
-const CACHE_NAME = 'srm-cache-v2';
+const CACHE_NAME = 'srm-cache-v3';
 const CORE_ASSETS = ['./', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', (event) => {

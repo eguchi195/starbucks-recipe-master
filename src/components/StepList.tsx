@@ -1,20 +1,18 @@
-import type { Drink, Size, Step, Temp } from '../data/types';
+import type { Drink, Step, Temp } from '../data/types';
 import SizeTable from './SizeTable';
 
 const MAX_STEP = 8;
 
-/** 付箋セルの一意キー */
-export const cellKey = (step: Step, label: string, size: Size) => `${step.no}:${step.temp}:${label}:${size}`;
+/** 付箋の一意キー（行単位＝S/T/G/Vは1タップで一気にめくれる） */
+export const rowKey = (step: Step, label: string) => `${step.no}:${step.temp}:${label}`;
 
-/** 現在の温度で表示中の全付箋セルキー（「すべて開く」用） */
-export function allCellKeys(drink: Drink, temp: Temp): string[] {
+/** 現在の温度で表示中の全付箋キー（「すべて開く」用） */
+export function allRowKeys(drink: Drink, temp: Temp): string[] {
   const keys: string[] = [];
   for (const step of drink.steps) {
     if (step.temp !== 'both' && step.temp !== temp) continue;
     for (const item of step.items ?? []) {
-      for (const size of drink.availableSizes) {
-        if (item.values[size] != null) keys.push(cellKey(step, item.label, size));
-      }
+      keys.push(rowKey(step, item.label));
     }
   }
   return keys;
@@ -87,7 +85,7 @@ export default function StepList({ drink, temp, revealed, onToggleCell }: Props)
                     <SizeTable
                       items={step.items}
                       availableSizes={drink.availableSizes}
-                      keyFor={(label, size) => cellKey(step, label, size)}
+                      keyFor={(label) => rowKey(step, label)}
                       revealed={revealed}
                       onToggle={onToggleCell}
                     />
